@@ -5,16 +5,19 @@ A near real-time background noise detection service that provides immediate visu
 # MVP - Simplified Architecture
 
 ## Architecture Overview
-Tech Stack (Simplified for MVP)
 
-Frontend: HTML/JavaScript (simple web client)
-Backend: AWS Lambda with Python runtime
-Communication: API Gateway WebSocket for bidirectional streaming
-Model Storage: S3 or Lambda Layer (no VPC needed)
-State Management: Amazon DynamoDB for session tracking
-Monitoring: AWS CloudWatch for basic metrics
+### Tech Stack (Simplified for MVP)
 
-System Flow
+- **Frontend**: HTML/JavaScript (simple web client)
+- **Backend**: AWS Lambda with Python runtime
+- **Communication**: API Gateway WebSocket for bidirectional streaming
+- **Model Storage**: S3 or Lambda Layer (no VPC needed)
+- **State Management**: Amazon DynamoDB for session tracking
+- **Monitoring**: AWS CloudWatch for basic metrics
+
+### System Flow
+
+```
 Browser Client
     ↓ (WebSocket connection)
 AWS API Gateway WebSocket
@@ -25,6 +28,7 @@ AWS Lambda Function
     └─ Return noise detection result
     ↓ (WebSocket response)
 Browser UI updates immediately
+```
 
 ## ML Model Storage Options
 
@@ -56,13 +60,13 @@ Browser UI updates immediately
 
 ### In Scope
 
-Single-user audio processing via browser microphone
-Binary classification: Noise detected (yes/no) with confidence score
-Simple visual feedback: Color indicator (green = clean, red = noisy)
-Basic temporal smoothing: 3-5 frame moving average to reduce flicker
-Audio frame processing: 30-50ms chunks at 16kHz sample rate
-WebSocket connection: Persistent connection for continuous streaming
-Basic error handling: Connection failures, timeout recovery
+- Single-user audio processing via browser microphone
+- Binary classification: Noise detected (yes/no) with confidence score
+- Simple visual feedback: Color indicator (green = clean, red = noisy)
+- Basic temporal smoothing: 3-5 frame moving average to reduce flicker
+- Audio frame processing: 30-50ms chunks at 16kHz sample rate
+- WebSocket connection: Persistent connection for continuous streaming
+- Basic error handling: Connection failures, timeout recovery
 
 ## Quick Start
 
