@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Background Noise Detection</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Background Noise Detection</h1>
+            <p class="subtitle">Real-time audio quality monitoring</p>
+        </header>
+
+        <main>
+            <div class="status-card">
+                <div class="status-indicator" id="statusIndicator">
+                    <div class="indicator-circle"></div>
+                </div>
+                <p class="status-text" id="statusText">Not Connected</p>
+                <p class="confidence-text" id="confidenceText">Confidence: --</p>
+            </div>
+
+            <div class="controls">
+                <button id="startBtn" class="btn btn-primary">Start Detection</button>
+                <button id="stopBtn" class="btn btn-secondary" disabled>Stop Detection</button>
+            </div>
+
+            <div class="info-panel">
+                <h3>Connection Info</h3>
+                <div class="info-row">
+                    <span class="info-label">Status:</span>
+                    <span class="info-value" id="connectionStatus">Disconnected</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Frames Processed:</span>
+                    <span class="info-value" id="frameCount">0</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Sample Rate:</span>
+                    <span class="info-value" id="sampleRate">16000 Hz</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Frame Size:</span>
+                    <span class="info-value" id="frameSize">30-50ms</span>
+                </div>
+            </div>
+
+            <div class="logs-panel">
+                <h3>Activity Log</h3>
+                <div id="logContainer" class="log-container"></div>
+            </div>
+        </main>
+
+        <footer>
+            <p>Background Noise Detection MVP - Powered by AWS Lambda & ML</p>
+        </footer>
+    </div>
+
+    <script src="../src/noiseDetector.js"></script>
+    <script src="../src/audioProcessor.js"></script>
+    <script src="../src/websocketClient.js"></script>
+    <script src="../src/app.js"></script>
+</body>
+</html>
