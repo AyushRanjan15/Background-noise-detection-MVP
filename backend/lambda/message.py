@@ -72,19 +72,26 @@ def mock_inference(audio_data):
 
 def run_inference(audio_data):
     """
-    Run noise detection inference on audio frame
+    Run Silero VAD inference on audio frame
     """
-    global model
+    try:
+        # Import Silero VAD module
+        from vad_silero import run_vad_inference
 
-    # Load model if not already loaded (cold start)
-    if model is None:
-        load_model()
+        # Run VAD inference
+        result = run_vad_inference(audio_data)
 
-    # TODO: Replace with actual model inference
-    # For now, use mock inference
-    result = mock_inference(audio_data)
+        # Convert VAD output to our format
+        return {
+            'isNoisy': not result['is_speech'],  # Invert: no speech = "noisy" (silence/noise)
+            'vad_probability': result['vad_probability'],
+            'confidence': result['vad_probability']
+        }
 
-    return result
+    except Exception as e:
+        logger.error(f"Silero VAD inference failed, using mock: {e}", exc_info=True)
+        # Fallback to mock if VAD fails
+        return mock_inference(audio_data)
 
 
 def send_message(connection_id, endpoint_url, message):
@@ -148,6 +155,7 @@ def handler(event, context):
                 'type': 'noise_detection',
                 'isNoisy': result['isNoisy'],
                 'confidence': result['confidence'],
+                'vad_probability': result.get('vad_probability', result['confidence']),
                 'timestamp': int(time.time() * 1000)
             }
 

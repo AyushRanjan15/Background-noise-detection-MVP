@@ -60,6 +60,17 @@ class NoiseDetectionStack(Stack):
         connections_table.grant_read_write_data(lambda_role)
 
         # ========================================
+        # Lambda Layer for Model
+        # ========================================
+        vad_model_layer = _lambda.LayerVersion(
+            self,
+            "VadModelLayer",
+            code=_lambda.Code.from_asset("ten-vad-layer.zip"),
+            compatible_runtimes=[_lambda.Runtime.PYTHON_3_11],
+            description="TEN VAD ONNX model with onnxruntime and librosa",
+        )
+
+        # ========================================
         # Lambda Functions
         # ========================================
 
@@ -105,14 +116,10 @@ class NoiseDetectionStack(Stack):
             handler="message.handler",
             code=_lambda.Code.from_asset("../../backend/lambda"),
             timeout=Duration.seconds(60),  # Longer for model inference
-            memory_size=512,  # More memory for ML inference
-            environment={
-                **lambda_environment,
-                # Add model-specific config when model is ready
-                # "MODEL_BUCKET": model_bucket.bucket_name,
-                # "MODEL_KEY": "noise-detection-model.pkl",
-            },
+            memory_size=1024,  # More memory for ML inference with onnxruntime
+            environment=lambda_environment,
             role=lambda_role,
+            layers=[vad_model_layer],  # Attach VAD model layer
             log_retention=logs.RetentionDays.ONE_WEEK,
         )
 
