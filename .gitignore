@@ -39,6 +39,7 @@ logs/
 
 # AWS
 .aws-sam/
+infrastructure/cdk/lambda_layer/
 
 # Testing
 .coverage

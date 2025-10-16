@@ -54,29 +54,30 @@ main {
     margin-bottom: 20px;
 }
 
-.indicator-circle {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
+.indicator-image {
+    width: 200px;
+    height: 200px;
     margin: 0 auto;
-    background: #6c757d;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    transition: all 0.3s ease;
+    display: block;
+    object-fit: contain;
+    opacity: 1;
+    transition: opacity 0.4s ease-in-out, transform 0.3s ease;
 }
 
-.indicator-circle.clean {
-    background: #28a745;
-    box-shadow: 0 4px 20px rgba(40, 167, 69, 0.5);
+.indicator-image.fade-out {
+    opacity: 0;
 }
 
-.indicator-circle.noisy {
-    background: #dc3545;
-    box-shadow: 0 4px 20px rgba(220, 53, 69, 0.5);
+.indicator-image.clean {
+    filter: drop-shadow(0 4px 20px rgba(40, 167, 69, 0.5));
 }
 
-.indicator-circle.processing {
-    background: #ffc107;
-    box-shadow: 0 4px 20px rgba(255, 193, 7, 0.5);
+.indicator-image.noisy {
+    filter: drop-shadow(0 4px 20px rgba(220, 53, 69, 0.3));
+}
+
+.indicator-image.processing {
+    filter: drop-shadow(0 4px 20px rgba(255, 193, 7, 0.3));
 }
 
 .status-text {
