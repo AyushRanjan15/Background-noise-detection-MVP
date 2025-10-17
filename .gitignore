@@ -13,8 +13,8 @@ env/
 ENV/
 
 # CDK
-*.js
-*.d.ts
+infrastructure/**/*.js
+infrastructure/**/*.d.ts
 cdk.out/
 .cdk.staging/
 cdk.context.json
